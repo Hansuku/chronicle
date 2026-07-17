@@ -8,12 +8,10 @@ When implementing from a selected generated mock, treat that image as the source
 
 ## Current design direction
 
-- The user selected the third generated concept: a centered Earth, an orbital time ring as the primary interaction, and a lower "同一时刻的文明光谱" comparison surface.
-- Preserve the restrained deep navy, spectral cyan, and amber scientific-observatory visual language.
-- Keep the globe view as the default, with interactive time travel, event pins, map scale, and a dedicated comparison mode.
-- The Earth must be a real Three.js scene with inertial drag rotation, zoom, and smooth camera movement; do not fall back to a static globe image for the primary experience.
+- The user replaced the globe direction with a hybrid of the first and third flat-map concepts: use the first concept's dark hand-drawn antique atlas style and the third concept's global map, right-side situation brief, fixed-center timeline, and lower comparison layout.
+- The primary surface is a flat, hand-drawn world map showing country- or polity-level historical territory. Do not use a globe, satellite imagery, province/county drill-down, or modern borders as the default for historical dates.
+- Time travel is global: changing the year must update political borders, polity names, colonial/dependency status, event markers, and spheres of influence across every world region. London and Guangzhou are examples, never the product's scope.
+- Preserve the restrained deep navy, mineral cyan, aged parchment, and amber scientific-atlas visual language.
 - The timeline must support continuous dragging and animated transitions instead of discrete, abrupt era jumps.
 - Time selection uses a stationary amber needle and centered year readout. Users drag the entire orbital scale beneath the needle; never turn the needle into a movable range thumb.
-- City comparison must be global and user-selectable. Do not hard-code the comparison to China versus Europe.
-- Preserve the selected static concept's premium fidelity after adding interaction: the timeline should remain an orbital chronometer visually integrated with the globe, not a generic rectangular range card.
-- The globe must stay crisp at the supported county zoom and retain the concept's atmospheric rim, edge glow, night-side lights, and layered scientific-observatory depth.
+- Civilization comparison must remain global and user-selectable. Do not hard-code the comparison to China versus Europe or to a fixed pair of cities.
