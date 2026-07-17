@@ -283,6 +283,51 @@ export const TERRITORY_LAYERS = [
     ],
   },
   {
+    year: 1949,
+    range: "公元 1949 年",
+    title: "冷战秩序与民族国家重组",
+    subtitle: "第二次世界大战后的新国家相继建立，殖民体系开始解体，美苏竞争塑造新的全球秩序。",
+    groups: [
+      { id: "china", name: "中华人民共和国", aliases: ["中国", "新中国", "PRC"], color: "#6c9996", countries: ["China"], label: [105, 35] },
+      { id: "roc-taiwan", name: "中华民国政府（迁台）", aliases: ["中华民国", "台湾"], color: "#728c91", countries: ["Taiwan"], label: [121, 23] },
+      { id: "usa", name: "美国", aliases: ["美利坚合众国", "United States", "USA"], color: "#8b7653", countries: ["United States of America"], label: [-100, 39] },
+      { id: "ussr", name: "苏维埃社会主义共和国联盟", aliases: ["苏联", "USSR"], color: "#7f665f", countries: ["Russia", "Ukraine", "Belarus", "Estonia", "Latvia", "Lithuania", "Moldova", "Kazakhstan", "Uzbekistan", "Turkmenistan", "Kyrgyzstan", "Tajikistan", "Georgia", "Armenia", "Azerbaijan"], label: [78, 57] },
+      { id: "uk", name: "英国", aliases: ["联合王国", "United Kingdom"], color: "#a9685b", countries: ["United Kingdom"], label: [-3, 55] },
+      { id: "french-union", name: "法兰西联盟", aliases: ["法国", "French Union"], color: "#697f9a", countries: ["France", "Algeria", "Tunisia", "Senegal", "Mali", "Niger", "Chad", "Central African Rep.", "Congo", "Gabon", "Vietnam", "Laos", "Cambodia", "Madagascar"], label: [2, 46], status: "colony" },
+      { id: "india", name: "印度自治领", aliases: ["印度", "India"], color: "#8a7960", countries: ["India"], label: [79, 22] },
+      { id: "pakistan", name: "巴基斯坦自治领", aliases: ["巴基斯坦", "Pakistan"], color: "#7c876d", countries: ["Pakistan", "Bangladesh"], label: [70, 29] },
+      { id: "japan", name: "盟军占领下的日本", aliases: ["日本", "Japan"], color: "#a06f67", countries: ["Japan"], label: [138, 37], status: "sphere" },
+      { id: "germany", name: "分裂中的德国", aliases: ["德国", "西德", "东德", "Germany"], color: "#777c70", countries: ["Germany"], label: [10, 51], status: "sphere" },
+      { id: "north-korea", name: "朝鲜民主主义人民共和国", aliases: ["朝鲜", "北朝鲜", "North Korea"], color: "#806863", countries: ["North Korea"], label: [127, 40] },
+      { id: "south-korea", name: "大韩民国", aliases: ["韩国", "南朝鲜", "South Korea"], color: "#667f91", countries: ["South Korea"], label: [128, 36] },
+      { id: "indonesia", name: "印度尼西亚共和国", aliases: ["印度尼西亚", "印尼", "Indonesia"], color: "#648b84", countries: ["Indonesia"], label: [116, -3] },
+      { id: "colonial-africa", name: "非洲殖民统治区", aliases: ["殖民地", "非洲殖民地"], color: "#887361", countries: ["Angola", "Mozambique", "Dem. Rep. Congo", "Kenya", "Uganda", "Nigeria", "Ghana", "Tanzania", "Zambia", "Zimbabwe", "Namibia"], label: [20, 0], status: "colony" },
+      { id: "brazil", name: "巴西合众国", aliases: ["巴西", "Brazil"], color: "#788b66", countries: ["Brazil"], label: [-53, -11] },
+      { id: "israel", name: "以色列国", aliases: ["以色列", "Israel"], color: "#718397", countries: ["Israel"], label: [35, 31] },
+      { id: "egypt", name: "埃及王国", aliases: ["埃及", "Egypt"], color: "#9a7256", countries: ["Egypt"], label: [30, 27] },
+      { id: "south-africa", name: "南非联邦", aliases: ["南非", "South Africa"], color: "#7e755d", countries: ["South Africa"], label: [25, -30] },
+    ],
+    events: [
+      { id: "prc-founded", name: "中华人民共和国成立", year: 1949, location: "北京", detail: "1949 年 10 月 1 日，中华人民共和国中央人民政府成立。", coordinates: [116.4, 39.9], type: "state" },
+      { id: "nato-founded", name: "北大西洋公约签署", year: 1949, location: "华盛顿", detail: "北大西洋公约组织建立，冷战军事同盟体系开始成形。", coordinates: [-77, 38.9], type: "state" },
+      { id: "german-states", name: "两个德国相继成立", year: 1949, location: "中欧", detail: "德意志联邦共和国与德意志民主共和国先后建立。", coordinates: [11, 51], type: "state" },
+      { id: "indonesia-sovereignty", name: "印度尼西亚主权移交", year: 1949, location: "印度尼西亚", detail: "荷兰在圆桌会议后正式移交主权，亚洲去殖民化继续推进。", coordinates: [107, -6], type: "state" },
+      { id: "soviet-atomic", name: "苏联首次核试验", year: 1949, location: "哈萨克草原", detail: "美苏核竞争进入新阶段，全球安全秩序发生改变。", coordinates: [79, 50], type: "technology" },
+    ],
+    insights: [
+      ["东亚", "新政权与国家重组", "中华人民共和国成立，日本仍处于盟军占领之下，朝鲜半岛南北分立。"],
+      ["欧洲", "冷战边界成形", "德国分裂，美苏阵营与军事同盟逐渐固定。"],
+      ["南亚与东南亚", "独立国家扩展", "印度、巴基斯坦和印度尼西亚进入国家建设阶段。"],
+      ["非洲", "殖民体系仍占主导", "多数地区尚处殖民统治，但民族独立运动持续增长。"],
+    ],
+    comparisons: [
+      { id: "china", name: "中华人民共和国", tone: "amber", values: profile("工业基础薄弱，开始恢复科研与生产", "农业占主导，战后经济亟待重建", "新国家政权与社会组织重构", "世俗国家框架下多种传统并存") },
+      { id: "usa", name: "美国", tone: "cyan", values: profile("核技术、航空与大规模工业领先", "战后制造、金融与消费经济扩张", "郊区化与中产阶层增长", "基督教传统与宗教多元") },
+      { id: "ussr", name: "苏联", tone: "sage", values: profile("重工业、航天前期与核技术发展", "计划经济推动战后重建", "高度集中的国家与社会组织", "国家无神论与宗教传统并存") },
+      { id: "india", name: "印度自治领", tone: "violet", values: profile("现代大学与工业体系起步", "农业经济与国家规划并行", "独立后的民主制度与社会整合", "印度教、伊斯兰教等多元共存") },
+    ],
+  },
+  {
     year: 2026,
     range: "公元 2026 年",
     title: "数字文明与多极世界",
@@ -339,6 +384,13 @@ export function getTerritoryLayer(year) {
     }
   }
   return closest;
+}
+
+export function matchesHistoricalGroup(group, query) {
+  const normalized = String(query).trim().toLocaleLowerCase();
+  if (!normalized) return false;
+  return [group.name, ...(group.aliases ?? []), ...(group.countries ?? [])]
+    .some((value) => String(value).toLocaleLowerCase().includes(normalized));
 }
 
 export function formatHistoricalYear(year) {

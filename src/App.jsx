@@ -30,12 +30,13 @@ import { HistoricalWorldMap } from "./components/HistoricalWorldMap.jsx";
 import {
   formatHistoricalYear,
   getTerritoryLayer,
+  matchesHistoricalGroup,
   TERRITORY_ANCHORS,
 } from "./data/historicalTerritories.js";
 
 const TIMELINE_MAX = 1000;
 const TIMELINE_VISIBLE_SPAN = 1100;
-const TIMELINE_ANCHOR_POSITIONS = [0, 130, 230, 340, 440, 530, 820, 1000];
+const TIMELINE_ANCHOR_POSITIONS = [0, 130, 230, 340, 440, 530, 820, 900, 1000];
 const TIMELINE_TICKS = Array.from({ length: 101 }, (_, index) => index * 10);
 
 const dimensions = [
@@ -222,7 +223,7 @@ export function App() {
     const normalized = query.trim().toLocaleLowerCase();
     if (!normalized) return [];
     const groupResults = territoryLayer.groups
-      .filter((group) => group.name.toLocaleLowerCase().includes(normalized))
+      .filter((group) => matchesHistoricalGroup(group, normalized))
       .slice(0, 5)
       .map((group) => ({ type: "group", id: group.id, title: group.name, subtitle: "国家或历史政权" }));
     const eventResults = territoryLayer.events
