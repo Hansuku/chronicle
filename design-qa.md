@@ -17,7 +17,7 @@
 ## Findings
 
 - No actionable P0/P1/P2 mismatch remains.
-- Fonts and typography: Noto Serif SC Variable carries the manuscript display voice, while Noto Sans SC Variable keeps dense labels and analytical copy legible. Hierarchy, line height, wrapping, truncation, and optical weight match the two references at the target viewport.
+- Fonts and typography: the system Songti/PingFang Chinese stacks carry the manuscript display voice while keeping dense labels and analytical copy legible without bundling oversized webfonts. Hierarchy, line height, wrapping, truncation, and optical weight match the two references at the target viewport.
 - Spacing and layout rhythm: the global map remains the dominant region; the left layer rail, right global situation brief, fixed-center timeline, and lower civilization spectrum follow the selected third layout. Persistent controls remain visible at 1440 × 1024 with no viewport overflow.
 - Colors and visual tokens: deep navy paper, aged amber ink, mineral cyan, rust, and sage are consistently mapped to the first reference's restrained hand-drawn atlas language. Contrast remains sufficient for interactive labels without turning the map into a bright strategy-game surface.
 - Image quality and asset fidelity: the generated 2048 × 1024 paper texture is crisp, low-contrast, and free of invented text or logos. Live D3/TopoJSON geometry supplies the map rather than a static screenshot, so historical territory layers can change while retaining the source art direction.
