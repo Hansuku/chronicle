@@ -15,3 +15,4 @@ When implementing from a selected generated mock, treat that image as the source
 - The timeline must support continuous dragging and animated transitions instead of discrete, abrupt era jumps.
 - Time selection uses a stationary amber needle and centered year readout. Users drag the entire orbital scale beneath the needle; never turn the needle into a movable range thumb.
 - Civilization comparison must remain global and user-selectable. Do not hard-code the comparison to China versus Europe or to a fixed pair of cities.
+- The flat historical map supports continuous zoom and drag-to-pan while preserving country/polity-level detail; zooming must not imply province or county drill-down.

@@ -407,6 +407,23 @@ input:focus-visible,
   touch-action: none;
 }
 
+.historical-map.is-pannable {
+  cursor: grab;
+}
+
+.historical-map.is-panning {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.historical-map.is-pannable .territory-shape {
+  cursor: grab;
+}
+
+.historical-map.is-panning .territory-shape {
+  cursor: grabbing;
+}
+
 .historical-map-svg {
   width: 100%;
   height: 100%;
@@ -590,6 +607,79 @@ input:focus-visible,
   color: #aca690;
   font-size: 9px;
   line-height: 1.55;
+}
+
+.map-zoom-cluster {
+  position: absolute;
+  z-index: 34;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.map-zoom-cluster > span {
+  padding: 4px 7px;
+  border: 1px solid rgba(205, 178, 122, 0.18);
+  background: rgba(5, 16, 24, 0.72);
+  color: #7f8f8b;
+  font-size: 8px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.map-zoom-controls {
+  display: grid;
+  grid-template-columns: 30px 42px 30px 30px;
+  height: 30px;
+  overflow: hidden;
+  border: 1px solid rgba(215, 181, 112, 0.38);
+  background: rgba(5, 16, 24, 0.92);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32), inset 0 0 12px rgba(104, 164, 166, 0.06);
+  pointer-events: auto;
+}
+
+.map-zoom-controls button,
+.map-zoom-controls output {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid rgba(215, 181, 112, 0.2);
+  background: transparent;
+  color: #c9b47f;
+}
+
+.map-zoom-controls button {
+  cursor: pointer;
+}
+
+.map-zoom-controls button:hover:not(:disabled),
+.map-zoom-controls button:focus-visible {
+  background: rgba(184, 125, 45, 0.18);
+  color: #f1ca75;
+  outline: none;
+}
+
+.map-zoom-controls button:disabled {
+  color: #4d5a58;
+  cursor: default;
+}
+
+.map-zoom-controls output {
+  width: 42px;
+  color: #7fbdc1;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8px;
+}
+
+.map-zoom-controls .map-zoom-reset {
+  border-right: 0;
+  border-left: 1px solid rgba(215, 181, 112, 0.2);
 }
 
 .map-legend {
@@ -1271,6 +1361,10 @@ input:focus-visible,
 
   .map-legend {
     width: 150px;
+  }
+
+  .map-zoom-cluster > span {
+    display: none;
   }
 
   .timeline-summary {
