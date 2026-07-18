@@ -44,7 +44,7 @@ export const TERRITORY_LAYERS = [
     title: "铁器时代与区域王权",
     subtitle: "铁器、骑兵与长途贸易推动欧亚非和美洲的区域政权重组。",
     groups: [
-      { id: "zhou", name: "西周", color: "#b89f55", countries: ["China"], label: [111, 34] },
+      { id: "zhou", name: "西周", color: "#b89f55", countries: ["China"], label: [111, 34], validFrom: -1046, validTo: -771 },
       { id: "egypt-21", name: "第三中间期埃及", color: "#b86d55", countries: ["Egypt"], label: [29, 27] },
       { id: "assyria", name: "新亚述帝国", color: "#9b5d50", countries: ["Iraq", "Syria"], label: [42, 35] },
       { id: "phoenicia", name: "腓尼基城邦", color: "#6d9ba2", countries: ["Lebanon"], label: [35.8, 33.8] },
@@ -79,7 +79,7 @@ export const TERRITORY_LAYERS = [
     subtitle: "罗马、汉与帕提亚等大国通过道路、税制与贸易连接起跨大陆网络。",
     groups: [
       { id: "rome", name: "罗马帝国", color: "#a96357", countries: ["Portugal", "Spain", "France", "United Kingdom", "Belgium", "Netherlands", "Switzerland", "Italy", "Austria", "Croatia", "Bosnia and Herz.", "Serbia", "Montenegro", "Albania", "Macedonia", "Greece", "Bulgaria", "Romania", "Turkey", "Syria", "Lebanon", "Israel", "Palestine", "Jordan", "Egypt", "Libya", "Tunisia", "Algeria"], label: [13, 43] },
-      { id: "han", name: "汉帝国", color: "#b3a053", countries: ["China", "North Korea", "South Korea", "Vietnam"], label: [108, 35] },
+      { id: "han", name: "汉帝国", color: "#b3a053", countries: ["China", "North Korea", "South Korea", "Vietnam"], label: [108, 35], validFrom: -202, validTo: 220 },
       { id: "parthia", name: "帕提亚帝国", color: "#7d8870", countries: ["Iran", "Iraq", "Armenia", "Azerbaijan", "Turkmenistan"], label: [54, 34] },
       { id: "satavahana", name: "百乘王朝", color: "#8b7964", countries: ["India"], label: [78, 20] },
       { id: "xiongnu", name: "匈奴联盟", color: "#718c88", countries: ["Mongolia", "Kazakhstan"], label: [93, 47], status: "sphere" },
@@ -108,12 +108,53 @@ export const TERRITORY_LAYERS = [
     ],
   },
   {
+    year: 535,
+    range: "公元 534—557 年",
+    title: "南北朝分立与古典帝国重组",
+    subtitle: "东亚处于南北政权并立阶段，拜占庭与萨珊争夺西亚通道，欧亚和印度洋网络继续连接多个文明中心。",
+    groups: [
+      { id: "china-dynasties", name: "东魏、西魏与南梁", aliases: ["中国", "南北朝", "东魏", "西魏", "南梁"], color: "#b3a053", countries: ["China"], label: [108, 35], validFrom: 534, validTo: 557 },
+      { id: "rouran", name: "柔然汗国", color: "#718c88", countries: ["Mongolia"], label: [100, 49], status: "sphere" },
+      { id: "korean-kingdoms", name: "高句丽、百济与新罗", aliases: ["朝鲜三国", "韩国", "朝鲜"], color: "#6f8590", countries: ["North Korea", "South Korea"], label: [127, 38] },
+      { id: "yamato", name: "大和政权", aliases: ["日本", "倭国"], color: "#a96d61", countries: ["Japan"], label: [138, 37] },
+      { id: "byzantium", name: "拜占庭帝国", color: "#925f68", countries: ["Greece", "Turkey", "Bulgaria", "Macedonia", "Albania", "Syria", "Lebanon", "Israel", "Palestine", "Jordan", "Egypt", "Libya", "Tunisia"], label: [27, 39] },
+      { id: "sasanian", name: "萨珊帝国", color: "#7d8870", countries: ["Iran", "Iraq", "Armenia", "Azerbaijan", "Turkmenistan"], label: [54, 34] },
+      { id: "franks", name: "法兰克诸王国", color: "#8e765f", countries: ["France", "Belgium", "Netherlands"], label: [3, 48] },
+      { id: "ostrogoths", name: "东哥特王国", color: "#8b7165", countries: ["Italy"], label: [12, 43] },
+      { id: "visigoths", name: "西哥特王国", color: "#8f6f5a", countries: ["Spain", "Portugal"], label: [-4, 40] },
+      { id: "post-gupta", name: "后笈多与北印度诸国", color: "#8b7964", countries: ["India"], label: [78, 22] },
+      { id: "hephthalites", name: "嚈哒势力", color: "#758b78", countries: ["Afghanistan", "Tajikistan", "Uzbekistan"], label: [67, 38], status: "sphere" },
+      { id: "aksum", name: "阿克苏姆王国", color: "#8e714f", countries: ["Ethiopia", "Eritrea", "Yemen"], label: [40, 11] },
+      { id: "maya", name: "古典期玛雅诸邦", color: "#698e78", countries: ["Guatemala", "Belize", "Honduras"], label: [-89, 17] },
+      { id: "moche", name: "莫切文化", color: "#7a7e91", countries: ["Peru"], label: [-77, -9], status: "sphere" },
+    ],
+    events: [
+      { id: "wei-split", name: "北魏分裂", year: 535, location: "中国北方", detail: "北魏在 534—535 年分裂为东魏与西魏，南方则由南梁统治。", coordinates: [112, 36], type: "state" },
+      { id: "justinian-code", name: "《查士丁尼法典》修订", year: 534, location: "君士坦丁堡", detail: "罗马法的系统整理成为拜占庭国家治理与后世法学的重要基础。", coordinates: [29, 41], type: "writing" },
+      { id: "gothic-war", name: "哥特战争开始", year: 535, location: "意大利", detail: "拜占庭试图恢复对意大利的统治，地中海西部进入长期战争。", coordinates: [13, 42], type: "state" },
+      { id: "silk-road-535", name: "中亚商路持续运转", year: 535, location: "中亚", detail: "萨珊、嚈哒与东亚诸政权共同影响丝路贸易和宗教传播。", coordinates: [65, 40], type: "trade" },
+      { id: "aksum-trade-535", name: "红海与印度洋贸易", year: 535, location: "东北非与阿拉伯海", detail: "阿克苏姆连接东非、地中海、阿拉伯与南亚港口。", coordinates: [42, 13], type: "trade" },
+    ],
+    insights: [
+      ["东亚", "南北政权并立", "东魏、西魏与南梁分据中国不同区域，朝鲜半岛处于三国时代。"],
+      ["地中海", "查士丁尼的重建计划", "法典编纂与西方征服共同强化拜占庭皇权。"],
+      ["西亚与中亚", "帝国与商路竞争", "萨珊和嚈哒控制欧亚贸易的重要节点。"],
+      ["印度洋", "港口网络延续", "阿克苏姆、南亚与东南亚之间保持海上往来。"],
+    ],
+    comparisons: [
+      { id: "china-dynasties", name: "东魏、西魏与南梁", tone: "amber", values: profile("农学、冶铁与石窟营造", "农业税赋、手工业与丝路贸易", "门阀政治与南北军政体系并存", "佛教兴盛，儒道传统延续") },
+      { id: "byzantium", name: "拜占庭帝国", tone: "cyan", values: profile("建筑、军事工程与罗马法整理", "地中海税收、城市与长途贸易", "皇权、官僚与城市共同体", "基督教国家传统") },
+      { id: "sasanian", name: "萨珊帝国", tone: "sage", values: profile("灌溉、骑兵与金属工艺", "农业税收与丝路中介贸易", "王权、贵族与地方治理", "祆教国家传统与宗教多元") },
+      { id: "aksum", name: "阿克苏姆王国", tone: "violet", values: profile("铸币、航海与石造建筑", "红海贸易与高地农业", "王权连接高地、港口与属地", "基督教与地方传统") },
+    ],
+  },
+  {
     year: 1000,
     range: "公元 950—1050 年",
     title: "商业与知识复兴",
     subtitle: "跨欧亚与印度洋的城市、商路和宗教网络，在多个政治中心之间重新生长。",
     groups: [
-      { id: "song", name: "北宋", color: "#b4a057", countries: ["China"], label: [113, 33] },
+      { id: "song", name: "北宋", color: "#b4a057", countries: ["China"], label: [113, 33], validFrom: 960, validTo: 1127 },
       { id: "liao", name: "辽", color: "#718b83", countries: ["Mongolia"], label: [106, 48] },
       { id: "japan", name: "平安日本", color: "#a96d61", countries: ["Japan"], label: [138, 37] },
       { id: "kievan", name: "基辅罗斯", color: "#718793", countries: ["Ukraine", "Belarus", "Russia"], label: [34, 52] },
@@ -152,7 +193,7 @@ export const TERRITORY_LAYERS = [
     title: "海洋网络与帝国竞逐",
     subtitle: "火器、远洋航行与财政国家重塑全球通道，美洲、非洲与欧亚的格局同时改变。",
     groups: [
-      { id: "ming", name: "明帝国", color: "#b2a052", countries: ["China"], label: [111, 34] },
+      { id: "ming", name: "明帝国", color: "#b2a052", countries: ["China"], label: [111, 34], validFrom: 1368, validTo: 1644 },
       { id: "ottoman", name: "奥斯曼帝国", color: "#9a5f55", countries: ["Turkey", "Greece", "Bulgaria", "Macedonia", "Serbia", "Bosnia and Herz.", "Albania", "Syria", "Lebanon", "Israel", "Palestine"], label: [28, 41] },
       { id: "muscovy", name: "莫斯科大公国", color: "#75857c", countries: ["Russia"], label: [55, 57] },
       { id: "safavid", name: "萨法维王朝", color: "#778d70", countries: ["Iran", "Azerbaijan", "Armenia"], label: [52, 33] },
@@ -204,7 +245,7 @@ export const TERRITORY_LAYERS = [
       { id: "spanish-empire", name: "西班牙帝国", color: "#b0844f", countries: ["Spain", "Mexico", "Guatemala", "Honduras", "El Salvador", "Nicaragua", "Costa Rica", "Panama", "Cuba", "Dominican Rep.", "Colombia", "Venezuela", "Ecuador", "Peru", "Bolivia", "Paraguay", "Argentina", "Chile"], label: [-74, 8], status: "colony" },
       { id: "portuguese-empire", name: "葡萄牙帝国", color: "#698e84", countries: ["Portugal", "Brazil", "Angola", "Mozambique"], label: [-53, -10], status: "colony" },
       { id: "russia", name: "俄罗斯帝国", color: "#75877d", countries: ["Russia", "Ukraine", "Belarus", "Estonia", "Latvia", "Lithuania", "Finland", "Kazakhstan"], label: [72, 58] },
-      { id: "qing", name: "清帝国", color: "#6c9996", countries: ["China", "Mongolia", "Taiwan"], label: [108, 35] },
+      { id: "qing", name: "清帝国", color: "#6c9996", countries: ["China", "Mongolia", "Taiwan"], label: [108, 35], validFrom: 1644, validTo: 1911 },
       { id: "ottoman", name: "奥斯曼帝国", color: "#9a6256", countries: ["Turkey", "Greece", "Bulgaria", "Macedonia", "Serbia", "Bosnia and Herz.", "Albania", "Syria", "Lebanon", "Israel", "Palestine", "Jordan", "Iraq", "Egypt", "Libya", "Tunisia"], label: [31, 36] },
       { id: "maratha", name: "马拉塔联盟", color: "#8d775f", countries: ["India"], label: [78, 22] },
       { id: "mughal", name: "莫卧儿帝国", color: "#847b68", countries: ["Pakistan"], label: [70, 30] },
@@ -248,7 +289,7 @@ export const TERRITORY_LAYERS = [
       { id: "british-empire", name: "大英帝国", color: "#a9685b", countries: ["United Kingdom", "Ireland", "Canada", "Australia", "New Zealand", "India", "Pakistan", "Bangladesh", "Sri Lanka", "Myanmar", "Malaysia", "Ghana", "Nigeria", "Kenya", "Uganda", "South Africa", "Egypt", "Sudan"], label: [78, 8], status: "colony" },
       { id: "french-empire", name: "法兰西第三共和国及殖民地", color: "#697f9a", countries: ["France", "Algeria", "Tunisia", "Senegal", "Mali", "Niger", "Chad", "Central African Rep.", "Congo", "Gabon", "Vietnam", "Laos", "Cambodia", "Madagascar"], label: [2, 46], status: "colony" },
       { id: "russia", name: "俄罗斯帝国", color: "#74877d", countries: ["Russia", "Ukraine", "Belarus", "Estonia", "Latvia", "Lithuania", "Finland", "Poland", "Kazakhstan", "Uzbekistan", "Turkmenistan", "Kyrgyzstan", "Tajikistan", "Georgia", "Armenia", "Azerbaijan"], label: [71, 58] },
-      { id: "qing", name: "清帝国", color: "#789793", countries: ["China", "Mongolia", "Taiwan"], label: [108, 35] },
+      { id: "qing", name: "清帝国", color: "#789793", countries: ["China", "Mongolia", "Taiwan"], label: [108, 35], validFrom: 1644, validTo: 1911 },
       { id: "ottoman", name: "奥斯曼帝国", color: "#966055", countries: ["Turkey", "Syria", "Lebanon", "Israel", "Palestine", "Jordan", "Iraq", "Libya", "Albania", "Macedonia"], label: [34, 34] },
       { id: "german", name: "德意志帝国", color: "#7d806b", countries: ["Germany", "Namibia", "Tanzania", "Cameroon"], label: [10, 51], status: "colony" },
       { id: "usa", name: "美国", color: "#8b7653", countries: ["United States of America", "Puerto Rico", "Philippines"], label: [-99, 39] },
@@ -288,7 +329,7 @@ export const TERRITORY_LAYERS = [
     title: "冷战秩序与民族国家重组",
     subtitle: "第二次世界大战后的新国家相继建立，殖民体系开始解体，美苏竞争塑造新的全球秩序。",
     groups: [
-      { id: "china", name: "中华人民共和国", aliases: ["中国", "新中国", "PRC"], color: "#6c9996", countries: ["China"], label: [105, 35] },
+      { id: "china", name: "中华人民共和国", aliases: ["中国", "新中国", "PRC"], color: "#6c9996", countries: ["China"], label: [105, 35], validFrom: 1949 },
       { id: "roc-taiwan", name: "中华民国政府（迁台）", aliases: ["中华民国", "台湾"], color: "#728c91", countries: ["Taiwan"], label: [121, 23] },
       { id: "usa", name: "美国", aliases: ["美利坚合众国", "United States", "USA"], color: "#8b7653", countries: ["United States of America"], label: [-100, 39] },
       { id: "ussr", name: "苏维埃社会主义共和国联盟", aliases: ["苏联", "USSR"], color: "#7f665f", countries: ["Russia", "Ukraine", "Belarus", "Estonia", "Latvia", "Lithuania", "Moldova", "Kazakhstan", "Uzbekistan", "Turkmenistan", "Kyrgyzstan", "Tajikistan", "Georgia", "Armenia", "Azerbaijan"], label: [78, 57] },
@@ -334,7 +375,7 @@ export const TERRITORY_LAYERS = [
     subtitle: "现代主权国家体系覆盖全球，数字网络、供应链与气候风险跨越疆界。",
     modern: true,
     groups: [
-      { id: "china", name: "中国", color: "#6c9996", countries: ["China"], label: [105, 35] },
+      { id: "china", name: "中国", color: "#6c9996", countries: ["China"], label: [105, 35], validFrom: 1949 },
       { id: "usa", name: "美国", color: "#8b7653", countries: ["United States of America"], label: [-100, 39] },
       { id: "russia", name: "俄罗斯", color: "#75877d", countries: ["Russia"], label: [78, 59] },
       { id: "india", name: "印度", color: "#8a7960", countries: ["India"], label: [79, 22] },
@@ -383,7 +424,17 @@ export function getTerritoryLayer(year) {
       closestDistance = distance;
     }
   }
-  return closest;
+  const visibleGroups = closest.groups.filter((group) => (
+    (group.validFrom == null || value >= group.validFrom)
+    && (group.validTo == null || value <= group.validTo)
+  ));
+  if (visibleGroups.length === closest.groups.length) return closest;
+  const visibleIds = new Set(visibleGroups.map((group) => group.id));
+  return {
+    ...closest,
+    groups: visibleGroups,
+    comparisons: closest.comparisons.filter((comparison) => visibleIds.has(comparison.id)),
+  };
 }
 
 export function matchesHistoricalGroup(group, query) {

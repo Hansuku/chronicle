@@ -36,7 +36,7 @@ import {
 
 const TIMELINE_MAX = 1000;
 const TIMELINE_VISIBLE_SPAN = 1100;
-const TIMELINE_ANCHOR_POSITIONS = [0, 130, 230, 340, 440, 530, 820, 900, 1000];
+const TIMELINE_ANCHOR_POSITIONS = [0, 130, 230, 290, 340, 440, 530, 820, 900, 1000];
 const TIMELINE_TICKS = Array.from({ length: 101 }, (_, index) => index * 10);
 
 const dimensions = [

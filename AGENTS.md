@@ -18,3 +18,4 @@ When implementing from a selected generated mock, treat that image as the source
 - The flat historical map supports continuous zoom and drag-to-pan while preserving country/polity-level detail; zooming must not imply province or county drill-down.
 - Milestone state transitions must have explicit time layers instead of being approximated by a distant anchor; search must recognize common country names and aliases alongside period-accurate formal polity names.
 - Historical event cards are opt-in: never auto-open one when the timeline changes, and close the active card when the user clicks elsewhere on the map.
+- Never display a named dynasty outside its documented date range merely because it is the nearest snapshot; add milestone layers for reported years and use validity bounds to suppress anachronistic polity labels.
