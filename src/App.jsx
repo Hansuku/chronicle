@@ -96,7 +96,7 @@ export function App() {
   const [viewMode, setViewMode] = useState("territory");
   const [mapLayers, setMapLayers] = useState({ colonies: true, events: true, metrics: false });
   const [activeGroupId, setActiveGroupId] = useState("britain");
-  const [activeEventId, setActiveEventId] = useState("london-steam");
+  const [activeEventId, setActiveEventId] = useState("");
   const [comparisonIds, setComparisonIds] = useState(["britain", "qing"]);
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -120,7 +120,7 @@ export function App() {
       return next.slice(0, 2);
     });
     setActiveGroupId(territoryLayer.groups[0]?.id ?? "");
-    setActiveEventId(territoryLayer.events[0]?.id ?? "");
+    setActiveEventId("");
   }, [territoryLayer.year]);
 
   useEffect(() => {
@@ -385,6 +385,7 @@ export function App() {
               setActiveEventId((current) => current === event.id ? "" : event.id);
               setActiveGroupId("");
             }}
+            onClearEvent={() => setActiveEventId("")}
           />
 
           <div className="map-legend" aria-label="地图图例">

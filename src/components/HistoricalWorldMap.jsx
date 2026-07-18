@@ -71,6 +71,7 @@ export function HistoricalWorldMap({
   layers,
   onSelectGroup,
   onSelectEvent,
+  onClearEvent,
 }) {
   const mapRef = useRef(null);
   const panRef = useRef(null);
@@ -197,6 +198,11 @@ export function HistoricalWorldMap({
     event.stopPropagation();
   }
 
+  function handleMapClick(event) {
+    if (event.target.closest(".map-event-pin, .map-event-card, .map-zoom-cluster")) return;
+    onClearEvent?.();
+  }
+
   function transformPoint(point) {
     return [point[0] * view.scale + view.x, point[1] * view.scale + view.y];
   }
@@ -214,6 +220,7 @@ export function HistoricalWorldMap({
       onPointerUp={endPan}
       onPointerCancel={endPan}
       onClickCapture={handleClickCapture}
+      onClick={handleMapClick}
     >
       <svg
         className="historical-map-svg"
