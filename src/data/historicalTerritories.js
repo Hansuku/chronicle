@@ -8,6 +8,7 @@ const profile = (technology, economy, society, belief) => ({
 export const TERRITORY_LAYERS = [
   {
     year: -3400,
+    effectiveFrom: -3400,
     range: "公元前 3400—前 3200 年",
     title: "城市、文字与早期国家",
     subtitle: "已知政权集中于大河流域，大片区域仍以部落、聚落与口述传统为主。",
@@ -40,6 +41,7 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: -1000,
+    effectiveFrom: -1100,
     range: "公元前 1100—前 800 年",
     title: "铁器时代与区域王权",
     subtitle: "铁器、骑兵与长途贸易推动欧亚非和美洲的区域政权重组。",
@@ -74,6 +76,7 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: 0,
+    effectiveFrom: -50,
     range: "公元前 50—公元 100 年",
     title: "欧亚帝国网络",
     subtitle: "罗马、汉与帕提亚等大国通过道路、税制与贸易连接起跨大陆网络。",
@@ -109,11 +112,12 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: 535,
+    effectiveFrom: 534,
     range: "公元 534—557 年",
     title: "南北朝分立与古典帝国重组",
     subtitle: "东亚处于南北政权并立阶段，拜占庭与萨珊争夺西亚通道，欧亚和印度洋网络继续连接多个文明中心。",
     groups: [
-      { id: "china-dynasties", name: "东魏、西魏与南梁", aliases: ["中国", "南北朝", "东魏", "西魏", "南梁"], color: "#b3a053", countries: ["China"], label: [108, 35], validFrom: 534, validTo: 557 },
+      { id: "china-dynasties", name: "东魏、西魏与南梁", aliases: ["中国", "南北朝", "东魏", "西魏", "南梁"], color: "#b3a053", countries: ["China"], label: [108, 35], validFrom: 535, validTo: 557 },
       { id: "rouran", name: "柔然汗国", color: "#718c88", countries: ["Mongolia"], label: [100, 49], status: "sphere" },
       { id: "korean-kingdoms", name: "高句丽、百济与新罗", aliases: ["朝鲜三国", "韩国", "朝鲜"], color: "#6f8590", countries: ["North Korea", "South Korea"], label: [127, 38] },
       { id: "yamato", name: "大和政权", aliases: ["日本", "倭国"], color: "#a96d61", countries: ["Japan"], label: [138, 37] },
@@ -150,6 +154,7 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: 1000,
+    effectiveFrom: 950,
     range: "公元 950—1050 年",
     title: "商业与知识复兴",
     subtitle: "跨欧亚与印度洋的城市、商路和宗教网络，在多个政治中心之间重新生长。",
@@ -189,6 +194,7 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: 1500,
+    effectiveFrom: 1450,
     range: "公元 1450—1550 年",
     title: "海洋网络与帝国竞逐",
     subtitle: "火器、远洋航行与财政国家重塑全球通道，美洲、非洲与欧亚的格局同时改变。",
@@ -234,6 +240,7 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: 1785,
+    effectiveFrom: 1760,
     range: "公元 1760—1840 年",
     title: "工业革命与帝国竞逐",
     subtitle: "蒸汽技术开始改写生产，但全球多数地区仍依靠农业、手工业与区域贸易。",
@@ -282,6 +289,7 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: 1900,
+    effectiveFrom: 1880,
     range: "公元 1880—1914 年",
     title: "工业化与殖民体系",
     subtitle: "铁路、电报与机器工业联结世界，也将殖民统治与资源争夺推向高峰。",
@@ -325,6 +333,7 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: 1949,
+    effectiveFrom: 1949,
     range: "公元 1949 年",
     title: "冷战秩序与民族国家重组",
     subtitle: "第二次世界大战后的新国家相继建立，殖民体系开始解体，美苏竞争塑造新的全球秩序。",
@@ -370,6 +379,7 @@ export const TERRITORY_LAYERS = [
   },
   {
     year: 2026,
+    effectiveFrom: 1992,
     range: "公元 2026 年",
     title: "数字文明与多极世界",
     subtitle: "现代主权国家体系覆盖全球，数字网络、供应链与气候风险跨越疆界。",
@@ -414,26 +424,29 @@ export const TERRITORY_ANCHORS = TERRITORY_LAYERS.map(({ year, title, range }) =
 }));
 
 export function getTerritoryLayer(year) {
-  const value = Number(year);
-  let closest = TERRITORY_LAYERS[0];
-  let closestDistance = Math.abs(value - closest.year);
+  const value = Math.round(Number(year));
+  let activeLayer = TERRITORY_LAYERS[0];
   for (const layer of TERRITORY_LAYERS.slice(1)) {
-    const distance = Math.abs(value - layer.year);
-    if (distance < closestDistance) {
-      closest = layer;
-      closestDistance = distance;
-    }
+    if (value < (layer.effectiveFrom ?? layer.year)) break;
+    activeLayer = layer;
   }
-  const visibleGroups = closest.groups.filter((group) => (
+  const filteredGroups = activeLayer.groups.filter((group) => (
     (group.validFrom == null || value >= group.validFrom)
     && (group.validTo == null || value <= group.validTo)
   ));
-  if (visibleGroups.length === closest.groups.length) return closest;
+  const visibleGroups = filteredGroups.length === activeLayer.groups.length
+    ? activeLayer.groups
+    : filteredGroups;
   const visibleIds = new Set(visibleGroups.map((group) => group.id));
+  const stateKey = `${activeLayer.year}:${[...visibleIds].join(",")}`;
   return {
-    ...closest,
+    ...activeLayer,
+    year: value,
+    sourceYear: activeLayer.year,
+    stateKey,
     groups: visibleGroups,
-    comparisons: closest.comparisons.filter((comparison) => visibleIds.has(comparison.id)),
+    events: activeLayer.events.filter((event) => Math.round(event.year) === value),
+    comparisons: activeLayer.comparisons.filter((comparison) => visibleIds.has(comparison.id)),
   };
 }
 

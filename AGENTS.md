@@ -19,3 +19,4 @@ When implementing from a selected generated mock, treat that image as the source
 - Milestone state transitions must have explicit time layers instead of being approximated by a distant anchor; search must recognize common country names and aliases alongside period-accurate formal polity names.
 - Historical event cards are opt-in: never auto-open one when the timeline changes, and close the active card when the user clicks elsewhere on the map.
 - Never display a named dynasty outside its documented date range merely because it is the nearest snapshot; add milestone layers for reported years and use validity bounds to suppress anachronistic polity labels.
+- The selected timeline year is authoritative and must never snap to a nearby snapshot year. Resolve the applicable historical state by its effective boundary, keep the displayed year exact, and show only events whose recorded year matches it.

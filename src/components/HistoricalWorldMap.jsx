@@ -98,7 +98,7 @@ export function HistoricalWorldMap({
       ...group,
       path: path(merge(worldAtlas, geometries)),
     };
-  }).filter(Boolean), [layer, path]);
+  }).filter(Boolean), [layer.groups, path]);
 
   const activeEvent = layer.events.find((event) => event.id === activeEventId) ?? null;
 
@@ -244,7 +244,7 @@ export function HistoricalWorldMap({
             ))}
           </g>
 
-          <g className="historical-territories" key={layer.year}>
+          <g className="historical-territories" key={layer.stateKey ?? layer.year}>
             {groupShapes.map((group) => {
               const hiddenColony = group.status === "colony" && !layers.colonies;
               return (
@@ -270,7 +270,7 @@ export function HistoricalWorldMap({
             })}
           </g>
 
-          <g className="polity-labels" key={`labels-${layer.year}`} aria-hidden="true">
+          <g className="polity-labels" key={`labels-${layer.stateKey ?? layer.year}`} aria-hidden="true">
             {layer.groups.map((group) => {
               const point = projection(group.label);
               if (!point) return null;

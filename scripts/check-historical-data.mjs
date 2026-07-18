@@ -17,6 +17,12 @@ assert.deepEqual(
   "Historical anchors must stay in chronological order",
 );
 
+assert.deepEqual(
+  TERRITORY_LAYERS.map(({ effectiveFrom }) => effectiveFrom),
+  [...TERRITORY_LAYERS].map(({ effectiveFrom }) => effectiveFrom).sort((left, right) => left - right),
+  "Historical state boundaries must stay in chronological order",
+);
+
 for (const layer of TERRITORY_LAYERS) {
   const groupIds = new Set();
   for (const group of layer.groups) {
@@ -42,6 +48,9 @@ assert.equal(
   "535 China label must reflect the Southern and Northern Dynasties",
 );
 assert.ok(!layer535.groups.some((group) => group.name === "北宋"), "535 must never display Northern Song");
+assert.equal(getTerritoryLayer(536).year, 536, "The selected year must never snap to an anchor");
+assert.equal(getTerritoryLayer(1786).year, 1786, "Every selected year must remain exact");
+assert.ok(getTerritoryLayer(536).events.every((event) => event.year === 536), "Events must match the selected year");
 
 assert.ok(!getTerritoryLayer(959).groups.some((group) => group.name === "北宋"));
 assert.ok(getTerritoryLayer(960).groups.some((group) => group.name === "北宋"));
@@ -52,5 +61,12 @@ const layer1949 = getTerritoryLayer(1949);
 const modernChina = layer1949.groups.find((group) => group.id === "china");
 assert.ok(modernChina, "1949 must include the People's Republic of China");
 assert.ok(matchesHistoricalGroup(modernChina, "中国"), "1949 China must be searchable by its common name");
+assert.ok(!getTerritoryLayer(1948).groups.some((group) => group.id === "china"), "PRC must not appear before 1949");
+
+for (let year = TERRITORY_ANCHORS[0].year; year <= TERRITORY_ANCHORS.at(-1).year; year += 1) {
+  const resolved = getTerritoryLayer(year);
+  assert.equal(resolved.year, year, `${year}: selected year was altered`);
+  assert.ok(resolved.events.every((event) => event.year === year), `${year}: event belongs to another year`);
+}
 
 console.log("Historical data checks passed.");

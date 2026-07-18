@@ -120,8 +120,11 @@ export function App() {
       return next.slice(0, 2);
     });
     setActiveGroupId(territoryLayer.groups[0]?.id ?? "");
+  }, [territoryLayer.stateKey]);
+
+  useEffect(() => {
     setActiveEventId("");
-  }, [territoryLayer.year]);
+  }, [year]);
 
   useEffect(() => {
     if (!playing) return undefined;
@@ -403,7 +406,7 @@ export function App() {
             <CompassRose size={22} weight="thin" aria-hidden="true" />
           </header>
           <p>{territoryLayer.subtitle}</p>
-          <div className="brief-items" key={territoryLayer.year}>
+          <div className="brief-items" key={territoryLayer.stateKey}>
             {territoryLayer.insights.map(([region, title, detail], index) => (
               <button type="button" key={`${region}-${title}`} onClick={() => setViewMode("compare")}>
                 <i>{index + 1}</i>
@@ -415,7 +418,7 @@ export function App() {
 
         <section className="timeline-control" aria-label="连续历史时间轴">
           <div className="timeline-summary">
-            <span>{territoryLayer.range}</span>
+            <span>当前年份 · {formatHistoricalYear(year)}</span>
             <strong>{territoryLayer.title}</strong>
           </div>
           <div
@@ -447,7 +450,7 @@ export function App() {
                   <button
                     type="button"
                     key={anchor.year}
-                    className={territoryLayer.year === anchor.year ? "is-current" : ""}
+                    className={year === anchor.year ? "is-current" : ""}
                     style={{ left: `${left}%` }}
                     onClick={() => animateToPosition(TIMELINE_ANCHOR_POSITIONS[index])}
                     aria-label={`跳转到${formatHistoricalYear(anchor.year)}`}
@@ -509,7 +512,7 @@ export function App() {
           </div>
         </header>
 
-        <div className="spectrum-table" key={`${territoryLayer.year}-${comparisonIds.join("-")}`}>
+        <div className="spectrum-table" key={`${territoryLayer.stateKey}-${comparisonIds.join("-")}`}>
           <div className="spectrum-table-head">
             <span />
             <button type="button" onClick={() => setViewMode("territory")}>{primaryComparison?.name}</button>
