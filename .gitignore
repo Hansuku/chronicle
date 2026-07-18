@@ -6,3 +6,14 @@ dist/
 .npm-cache/
 artifacts/
 .DS_Store
+
+# Local environment and credential files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets/
