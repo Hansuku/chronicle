@@ -1,3 +1,5 @@
+import { getHistoricalEventsForYear } from "./eventContent.js";
+
 const profile = (technology, economy, society, belief) => ({
   technology,
   economy,
@@ -19,12 +21,6 @@ export const TERRITORY_LAYERS = [
       { id: "indus", name: "印度河聚落", color: "#6f9aa0", countries: ["Pakistan", "India"], label: [70, 24] },
       { id: "longshan", name: "龙山文化区", color: "#b5a660", countries: ["China"], label: [111, 35], status: "sphere" },
       { id: "caral", name: "卡拉尔文明", color: "#8f7658", countries: ["Peru"], label: [-77, -10] },
-    ],
-    events: [
-      { id: "uruk", name: "乌鲁克", year: -3400, location: "两河流域", detail: "文字、神庙经济与城市行政开始结合。", coordinates: [44.4, 31.3], type: "writing" },
-      { id: "nile", name: "尼罗河统一进程", year: -3300, location: "东北非", detail: "区域权力沿尼罗河走廊逐步整合。", coordinates: [31.2, 27.1], type: "state" },
-      { id: "indus-craft", name: "印度河手工业网络", year: -3300, location: "南亚", detail: "聚落间出现稳定的珠饰、陶器与交换网络。", coordinates: [69.2, 27.4], type: "trade" },
-      { id: "longshan-cities", name: "城址与礼制萌芽", year: -3200, location: "东亚", detail: "夯土城址和区域中心在黄河流域出现。", coordinates: [112.5, 34.8], type: "culture" },
     ],
     insights: [
       ["两河", "城市国家形成", "文字与行政记录推动城市治理。"],
@@ -55,12 +51,6 @@ export const TERRITORY_LAYERS = [
       { id: "olmec", name: "奥尔梅克", color: "#9a7151", countries: ["Mexico"], label: [-93, 18] },
       { id: "chavin", name: "安第斯早期国家", color: "#788f77", countries: ["Peru", "Bolivia"], label: [-73, -13] },
     ],
-    events: [
-      { id: "zhou-rites", name: "礼乐与分封", year: -1000, location: "东亚", detail: "宗法、礼制与封建网络维系广域王权。", coordinates: [111, 34], type: "culture" },
-      { id: "iron-mideast", name: "铁器扩散", year: -1000, location: "西亚", detail: "铁制工具与武器改变农业和军事组织。", coordinates: [39, 36], type: "technology" },
-      { id: "phoenician", name: "腓尼基海贸", year: -950, location: "地中海", detail: "港口城邦将字母、染料与贸易网络带向西方。", coordinates: [34, 34], type: "trade" },
-      { id: "olmec-heads", name: "奥尔梅克中心兴起", year: -900, location: "中美洲", detail: "礼仪中心和大型石刻形成区域影响。", coordinates: [-94, 18], type: "state" },
-    ],
     insights: [
       ["东亚", "周王权与礼制", "分封网络连接多个区域政治中心。"],
       ["西亚", "铁器与帝国竞争", "军事动员和行政能力快速提升。"],
@@ -90,12 +80,6 @@ export const TERRITORY_LAYERS = [
       { id: "kush", name: "库施王国", color: "#8a6f56", countries: ["Sudan"], label: [30, 16] },
       { id: "maya", name: "玛雅诸邦", color: "#698e78", countries: ["Guatemala", "Belize", "Honduras"], label: [-89, 17] },
       { id: "andean", name: "安第斯诸文化", color: "#7a7e91", countries: ["Peru", "Bolivia"], label: [-73, -14], status: "sphere" },
-    ],
-    events: [
-      { id: "silk-road", name: "丝绸之路网络", year: 0, location: "欧亚大陆", detail: "商旅、使节与宗教沿多个陆路节点往来。", coordinates: [69, 41], type: "trade" },
-      { id: "roman-road", name: "罗马道路体系", year: 0, location: "地中海", detail: "道路、港口与法律服务广域行政。", coordinates: [12.5, 42], type: "technology" },
-      { id: "han-paper", name: "造纸技术改进", year: 50, location: "东亚", detail: "书写材料成本下降，行政与知识传播更高效。", coordinates: [113, 34], type: "writing" },
-      { id: "aksum-port", name: "红海贸易", year: 50, location: "东北非", detail: "阿克苏姆连接地中海、非洲内陆与印度洋。", coordinates: [40, 14], type: "trade" },
     ],
     insights: [
       ["地中海", "罗马秩序扩张", "道路、城市与法律连接广阔疆域。"],
@@ -132,13 +116,6 @@ export const TERRITORY_LAYERS = [
       { id: "maya", name: "古典期玛雅诸邦", color: "#698e78", countries: ["Guatemala", "Belize", "Honduras"], label: [-89, 17] },
       { id: "moche", name: "莫切文化", color: "#7a7e91", countries: ["Peru"], label: [-77, -9], status: "sphere" },
     ],
-    events: [
-      { id: "wei-split", name: "北魏分裂", year: 535, location: "中国北方", detail: "北魏在 534—535 年分裂为东魏与西魏，南方则由南梁统治。", coordinates: [112, 36], type: "state" },
-      { id: "justinian-code", name: "《查士丁尼法典》修订", year: 534, location: "君士坦丁堡", detail: "罗马法的系统整理成为拜占庭国家治理与后世法学的重要基础。", coordinates: [29, 41], type: "writing" },
-      { id: "gothic-war", name: "哥特战争开始", year: 535, location: "意大利", detail: "拜占庭试图恢复对意大利的统治，地中海西部进入长期战争。", coordinates: [13, 42], type: "state" },
-      { id: "silk-road-535", name: "中亚商路持续运转", year: 535, location: "中亚", detail: "萨珊、嚈哒与东亚诸政权共同影响丝路贸易和宗教传播。", coordinates: [65, 40], type: "trade" },
-      { id: "aksum-trade-535", name: "红海与印度洋贸易", year: 535, location: "东北非与阿拉伯海", detail: "阿克苏姆连接东非、地中海、阿拉伯与南亚港口。", coordinates: [42, 13], type: "trade" },
-    ],
     insights: [
       ["东亚", "南北政权并立", "东魏、西魏与南梁分据中国不同区域，朝鲜半岛处于三国时代。"],
       ["地中海", "查士丁尼的重建计划", "法典编纂与西方征服共同强化拜占庭皇权。"],
@@ -172,12 +149,6 @@ export const TERRITORY_LAYERS = [
       { id: "srivijaya", name: "三佛齐", color: "#5d8b86", countries: ["Indonesia", "Malaysia"], label: [105, 1] },
       { id: "andean", name: "蒂瓦纳库与瓦里", color: "#7e768b", countries: ["Peru", "Bolivia"], label: [-72, -15] },
       { id: "maya", name: "后古典玛雅诸邦", color: "#6f8b72", countries: ["Mexico", "Guatemala", "Belize"], label: [-90, 18] },
-    ],
-    events: [
-      { id: "song-print", name: "雕版印刷普及", year: 1000, location: "东亚", detail: "典籍、历法与商业文书获得更大传播范围。", coordinates: [113, 31], type: "writing" },
-      { id: "baghdad-science", name: "知识翻译与研究", year: 1000, location: "西亚", detail: "医学、数学与天文传统在城市学术网络中延续。", coordinates: [44, 33], type: "technology" },
-      { id: "indian-ocean", name: "季风航线繁荣", year: 1000, location: "印度洋", detail: "港口商人连接东非、南亚与东南亚。", coordinates: [70, 6], type: "trade" },
-      { id: "trans-sahara", name: "跨撒哈拉贸易", year: 1000, location: "西非", detail: "黄金、盐和知识沿商路进入城市中心。", coordinates: [-3, 18], type: "trade" },
     ],
     insights: [
       ["东亚", "城市与印刷", "商业城市和书籍生产进入高增长阶段。"],
@@ -217,13 +188,6 @@ export const TERRITORY_LAYERS = [
       { id: "vijayanagara", name: "毗奢耶那伽罗", color: "#7f8e67", countries: ["India"], label: [77, 17] },
       { id: "ayutthaya", name: "阿瑜陀耶", color: "#638b84", countries: ["Thailand", "Laos", "Cambodia"], label: [102, 16] },
       { id: "malacca", name: "马六甲苏丹国", color: "#5d858c", countries: ["Malaysia", "Indonesia"], label: [105, 3] },
-    ],
-    events: [
-      { id: "columbus", name: "大西洋航路重组", year: 1492, location: "大西洋", detail: "跨洋航行引发殖民、疾病与全球交换。", coordinates: [-46, 28], type: "trade" },
-      { id: "ottoman-constantinople", name: "君士坦丁堡易手", year: 1453, location: "东地中海", detail: "奥斯曼控制连接黑海与地中海的关键节点。", coordinates: [29, 41], type: "state" },
-      { id: "printing-europe", name: "活字印刷扩散", year: 1500, location: "欧洲", detail: "书籍复制加速宗教、科学与政治思想传播。", coordinates: [9, 50], type: "writing" },
-      { id: "ming-maritime", name: "东亚海贸活跃", year: 1500, location: "东亚", detail: "白银、陶瓷和丝绸连接东南沿海与全球港口。", coordinates: [118, 25], type: "trade" },
-      { id: "songhai-timbuktu", name: "廷巴克图学术网络", year: 1500, location: "西非", detail: "商路城市成为伊斯兰教育与手稿中心。", coordinates: [-3, 17], type: "culture" },
     ],
     insights: [
       ["大西洋", "跨洋通道重组", "殖民、疾病与物种交换改变多个大陆。"],
@@ -267,13 +231,6 @@ export const TERRITORY_LAYERS = [
       { id: "indonesia", name: "荷属东印度据点", color: "#7a7287", countries: ["Indonesia"], label: [116, -2], status: "colony" },
       { id: "australia", name: "原住民诸族群", color: "#827966", countries: ["Australia"], label: [134, -25], status: "sphere" },
     ],
-    events: [
-      { id: "london-steam", name: "蒸汽与工厂制度", year: 1785, location: "伦敦及英格兰工业区", detail: "纺织机械、煤炭与蒸汽动力正在改变生产组织。", coordinates: [-1.4, 53.4], type: "technology" },
-      { id: "qing-trade", name: "广州十三行贸易", year: 1785, location: "清帝国南部沿海", detail: "广州是清帝国与欧洲海贸往来的核心口岸。", coordinates: [113.3, 23.1], type: "trade" },
-      { id: "us-republic", name: "新共和国形成", year: 1785, location: "北美", detail: "独立战争后，各州正在重建财政与政治秩序。", coordinates: [-76.5, 39.2], type: "state" },
-      { id: "india-transition", name: "区域权力重组", year: 1785, location: "南亚", detail: "马拉塔、迈索尔与东印度公司持续争夺贸易和税收。", coordinates: [77, 20], type: "state" },
-      { id: "west-africa-trade", name: "西非国家与大西洋贸易", year: 1785, location: "几内亚湾", detail: "阿散蒂、奥约等政权连接内陆生产与沿海贸易。", coordinates: [1, 8], type: "trade" },
-    ],
     insights: [
       ["欧洲", "工业革命扩散", "蒸汽机械与工厂制度开始改变生产和城市。"],
       ["东亚", "清帝国盛世后期", "农业、手工业与区域贸易仍是经济主体。"],
@@ -310,13 +267,6 @@ export const TERRITORY_LAYERS = [
       { id: "persia", name: "卡扎尔波斯", color: "#798a70", countries: ["Iran"], label: [54, 32] },
       { id: "brazil", name: "巴西共和国", color: "#8c7551", countries: ["Brazil"], label: [-52, -10] },
       { id: "argentina", name: "阿根廷共和国", color: "#756f82", countries: ["Argentina"], label: [-64, -38] },
-    ],
-    events: [
-      { id: "telegraph", name: "全球电报网络", year: 1900, location: "跨洋线路", detail: "信息速度从数周缩短到数分钟。", coordinates: [-25, 33], type: "technology" },
-      { id: "railways", name: "大陆铁路扩张", year: 1900, location: "欧亚大陆", detail: "铁路改变资源、人口与军事动员。", coordinates: [72, 52], type: "technology" },
-      { id: "anti-colonial", name: "反殖民思想增长", year: 1900, location: "亚洲与非洲", detail: "新式教育、报刊和城市社团推动政治组织。", coordinates: [79, 20], type: "culture" },
-      { id: "industrial-cities", name: "工业城市网络", year: 1900, location: "欧洲与北美", detail: "电力、钢铁和大规模工厂重塑城市生活。", coordinates: [-4, 52], type: "technology" },
-      { id: "scramble-africa", name: "非洲殖民分割", year: 1900, location: "非洲大陆", detail: "殖民疆界与资源体系重塑既有政治空间。", coordinates: [21, 2], type: "state" },
     ],
     insights: [
       ["欧洲", "第二次工业革命", "电力、化工与钢铁推动大规模生产。"],
@@ -357,13 +307,6 @@ export const TERRITORY_LAYERS = [
       { id: "egypt", name: "埃及王国", aliases: ["埃及", "Egypt"], color: "#9a7256", countries: ["Egypt"], label: [30, 27] },
       { id: "south-africa", name: "南非联邦", aliases: ["南非", "South Africa"], color: "#7e755d", countries: ["South Africa"], label: [25, -30] },
     ],
-    events: [
-      { id: "prc-founded", name: "中华人民共和国成立", year: 1949, location: "北京", detail: "1949 年 10 月 1 日，中华人民共和国中央人民政府成立。", coordinates: [116.4, 39.9], type: "state" },
-      { id: "nato-founded", name: "北大西洋公约签署", year: 1949, location: "华盛顿", detail: "北大西洋公约组织建立，冷战军事同盟体系开始成形。", coordinates: [-77, 38.9], type: "state" },
-      { id: "german-states", name: "两个德国相继成立", year: 1949, location: "中欧", detail: "德意志联邦共和国与德意志民主共和国先后建立。", coordinates: [11, 51], type: "state" },
-      { id: "indonesia-sovereignty", name: "印度尼西亚主权移交", year: 1949, location: "印度尼西亚", detail: "荷兰在圆桌会议后正式移交主权，亚洲去殖民化继续推进。", coordinates: [107, -6], type: "state" },
-      { id: "soviet-atomic", name: "苏联首次核试验", year: 1949, location: "哈萨克草原", detail: "美苏核竞争进入新阶段，全球安全秩序发生改变。", coordinates: [79, 50], type: "technology" },
-    ],
     insights: [
       ["东亚", "新政权与国家重组", "中华人民共和国成立，日本仍处于盟军占领之下，朝鲜半岛南北分立。"],
       ["欧洲", "冷战边界成形", "德国分裂，美苏阵营与军事同盟逐渐固定。"],
@@ -395,12 +338,6 @@ export const TERRITORY_LAYERS = [
       { id: "japan", name: "日本", color: "#a06f67", countries: ["Japan"], label: [138, 37] },
       { id: "indonesia", name: "印度尼西亚", color: "#648b84", countries: ["Indonesia"], label: [116, -3] },
       { id: "south-africa", name: "南非", color: "#7e755d", countries: ["South Africa"], label: [25, -30] },
-    ],
-    events: [
-      { id: "ai", name: "人工智能基础设施扩张", year: 2026, location: "全球数字网络", detail: "算力、数据和模型能力正在改写产业与知识生产。", coordinates: [-120, 38], type: "technology" },
-      { id: "renewable", name: "能源系统转型", year: 2026, location: "全球", detail: "可再生能源、储能与电网投资持续上升。", coordinates: [105, 31], type: "technology" },
-      { id: "supply-chain", name: "供应链区域化", year: 2026, location: "欧亚与太平洋", detail: "安全、成本与韧性共同影响跨国生产布局。", coordinates: [118, 18], type: "trade" },
-      { id: "african-cities", name: "非洲城市快速增长", year: 2026, location: "非洲大陆", detail: "人口、数字金融和基础设施推动新的城市网络。", coordinates: [8, 8], type: "state" },
     ],
     insights: [
       ["全球", "数字网络深化", "人工智能与数据基础设施重塑生产方式。"],
@@ -445,7 +382,7 @@ export function getTerritoryLayer(year) {
     sourceYear: activeLayer.year,
     stateKey,
     groups: visibleGroups,
-    events: activeLayer.events.filter((event) => Math.round(event.year) === value),
+    events: getHistoricalEventsForYear(value),
     comparisons: activeLayer.comparisons.filter((comparison) => visibleIds.has(comparison.id)),
   };
 }

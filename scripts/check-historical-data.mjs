@@ -6,6 +6,11 @@ import {
   TERRITORY_ANCHORS,
   TERRITORY_LAYERS,
 } from "../src/data/historicalTerritories.js";
+import {
+  HISTORICAL_EVENT_CONTENT,
+  HISTORICAL_EVENTS,
+  validateEventContent,
+} from "../src/data/eventContent.js";
 
 const atlasCountries = new Set(
   worldAtlas.objects.countries.geometries.map((geometry) => geometry.properties?.name),
@@ -40,6 +45,29 @@ for (const layer of TERRITORY_LAYERS) {
   }
 }
 
+const eventContentValidation = validateEventContent(HISTORICAL_EVENT_CONTENT);
+assert.deepEqual(eventContentValidation.errors, [], "Historical event content must pass schema checks");
+assert.equal(
+  new Set(HISTORICAL_EVENTS.map((event) => event.id)).size,
+  HISTORICAL_EVENTS.length,
+  "Historical event IDs must be globally unique",
+);
+
+for (const event of HISTORICAL_EVENTS) {
+  assert.ok(
+    getTerritoryLayer(event.year).events.some((candidate) => candidate.id === event.id),
+    `${event.id}: event must be visible in its exact year`,
+  );
+  assert.ok(
+    !getTerritoryLayer(event.year - 1).events.some((candidate) => candidate.id === event.id),
+    `${event.id}: event must not appear one year early`,
+  );
+  assert.ok(
+    !getTerritoryLayer(event.year + 1).events.some((candidate) => candidate.id === event.id),
+    `${event.id}: event must not appear one year late`,
+  );
+}
+
 const layer535 = getTerritoryLayer(535);
 assert.equal(layer535.year, 535, "535 must use its own historical snapshot");
 assert.equal(
@@ -62,6 +90,17 @@ const modernChina = layer1949.groups.find((group) => group.id === "china");
 assert.ok(modernChina, "1949 must include the People's Republic of China");
 assert.ok(matchesHistoricalGroup(modernChina, "中国"), "1949 China must be searchable by its common name");
 assert.ok(!getTerritoryLayer(1948).groups.some((group) => group.id === "china"), "PRC must not appear before 1949");
+
+const layer1644 = getTerritoryLayer(1644);
+assert.equal(layer1644.year, 1644, "1644 must remain the selected year");
+assert.ok(
+  layer1644.events.some((event) => event.id === "cn-1644-beijing-fall"),
+  "1644 must include the authored Beijing event",
+);
+assert.ok(
+  !getTerritoryLayer(1643).events.some((event) => event.id === "cn-1644-beijing-fall"),
+  "The authored Beijing event must not appear before 1644",
+);
 
 for (let year = TERRITORY_ANCHORS[0].year; year <= TERRITORY_ANCHORS.at(-1).year; year += 1) {
   const resolved = getTerritoryLayer(year);

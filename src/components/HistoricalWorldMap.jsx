@@ -72,10 +72,16 @@ export function HistoricalWorldMap({
   onSelectGroup,
   onSelectEvent,
   onClearEvent,
+  coordinatePickerActive = false,
+  editableEventId = "",
+  onPickCoordinates,
+  onMoveEditableEvent,
 }) {
   const mapRef = useRef(null);
   const panRef = useRef(null);
+  const eventDragRef = useRef(null);
   const suppressClickRef = useRef(false);
+  const suppressEventClickRef = useRef("");
   const [view, setView] = useState({ scale: MIN_ZOOM, x: 0, y: 0 });
   const [panning, setPanning] = useState(false);
   const size = useMapSize(mapRef);
@@ -144,6 +150,19 @@ export function HistoricalWorldMap({
     };
   }
 
+  function coordinatesFromPointer(event) {
+    const point = pointInMap(event);
+    const coordinates = projection.invert([
+      (point.x - view.x) / view.scale,
+      (point.y - view.y) / view.scale,
+    ]);
+    if (!coordinates) return null;
+    const [longitude, latitude] = coordinates;
+    if (!Number.isFinite(longitude) || !Number.isFinite(latitude)) return null;
+    if (longitude < -180 || longitude > 180 || latitude < -90 || latitude > 90) return null;
+    return [Number(longitude.toFixed(4)), Number(latitude.toFixed(4))];
+  }
+
   function beginPan(event) {
     if (event.button !== 0 || view.scale <= MIN_ZOOM || event.target.closest("button, article, .map-zoom-cluster")) return;
     const bounds = mapRef.current?.getBoundingClientRect();
@@ -200,7 +219,50 @@ export function HistoricalWorldMap({
 
   function handleMapClick(event) {
     if (event.target.closest(".map-event-pin, .map-event-card, .map-zoom-cluster")) return;
+    if (coordinatePickerActive) {
+      const coordinates = coordinatesFromPointer(event);
+      if (coordinates) onPickCoordinates?.(coordinates);
+      return;
+    }
     onClearEvent?.();
+  }
+
+  function beginEventDrag(event, historicalEvent) {
+    if (historicalEvent.id !== editableEventId || !onMoveEditableEvent) return;
+    event.preventDefault();
+    event.stopPropagation();
+    eventDragRef.current = {
+      pointerId: event.pointerId,
+      eventId: historicalEvent.id,
+      clientX: event.clientX,
+      clientY: event.clientY,
+      moved: false,
+    };
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+  }
+
+  function moveEventDrag(event, historicalEvent) {
+    const start = eventDragRef.current;
+    if (!start || start.pointerId !== event.pointerId || start.eventId !== historicalEvent.id) return;
+    if (Math.hypot(event.clientX - start.clientX, event.clientY - start.clientY) > 2) start.moved = true;
+    const coordinates = coordinatesFromPointer(event);
+    if (coordinates) onMoveEditableEvent?.(coordinates);
+  }
+
+  function endEventDrag(event, historicalEvent) {
+    const start = eventDragRef.current;
+    if (!start || start.pointerId !== event.pointerId || start.eventId !== historicalEvent.id) return;
+    if (event.type !== "pointercancel") moveEventDrag(event, historicalEvent);
+    if (start.moved) {
+      suppressEventClickRef.current = historicalEvent.id;
+      window.setTimeout(() => {
+        if (suppressEventClickRef.current === historicalEvent.id) suppressEventClickRef.current = "";
+      }, 0);
+    }
+    eventDragRef.current = null;
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
   }
 
   function transformPoint(point) {
@@ -212,7 +274,7 @@ export function HistoricalWorldMap({
 
   return (
     <div
-      className={`historical-map ${atMinimumZoom ? "" : "is-pannable"} ${panning ? "is-panning" : ""}`}
+      className={`historical-map ${atMinimumZoom ? "" : "is-pannable"} ${panning ? "is-panning" : ""} ${coordinatePickerActive ? "is-coordinate-picker" : ""}`}
       ref={mapRef}
       onDoubleClick={(event) => zoomAt(BUTTON_ZOOM_FACTOR, pointInMap(event))}
       onPointerDown={beginPan}
@@ -253,14 +315,18 @@ export function HistoricalWorldMap({
                   d={group.path ?? ""}
                   className={`territory-shape territory-${group.status ?? "sovereign"} ${group.id === activeGroupId ? "is-active" : ""} ${hiddenColony ? "is-muted" : ""}`}
                   style={{ "--territory-color": group.color }}
-                  onClick={() => onSelectGroup(group)}
-                  tabIndex="0"
+                  onClick={(event) => {
+                    if (coordinatePickerActive) return;
+                    event.stopPropagation();
+                    onSelectGroup?.(group);
+                  }}
+                  tabIndex={coordinatePickerActive ? -1 : 0}
                   role="button"
                   aria-label={`查看${group.name}`}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
-                      onSelectGroup(group);
+                      onSelectGroup?.(group);
                     }
                   }}
                 >
@@ -309,7 +375,14 @@ export function HistoricalWorldMap({
                 className={`map-event-pin event-${event.type} ${event.id === activeEventId ? "is-active" : ""}`}
                 style={{ left: `${transformedPoint[0]}px`, top: `${transformedPoint[1]}px` }}
                 aria-label={`${event.name}，${event.location}`}
-                onClick={() => onSelectEvent(event)}
+                onPointerDown={(pointerEvent) => beginEventDrag(pointerEvent, event)}
+                onPointerMove={(pointerEvent) => moveEventDrag(pointerEvent, event)}
+                onPointerUp={(pointerEvent) => endEventDrag(pointerEvent, event)}
+                onPointerCancel={(pointerEvent) => endEventDrag(pointerEvent, event)}
+                onClick={() => {
+                  if (suppressEventClickRef.current === event.id) return;
+                  onSelectEvent?.(event);
+                }}
               >
                 <EventIcon type={event.type} />
               </button>

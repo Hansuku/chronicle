@@ -20,3 +20,4 @@ When implementing from a selected generated mock, treat that image as the source
 - Historical event cards are opt-in: never auto-open one when the timeline changes, and close the active card when the user clicks elsewhere on the map.
 - Never display a named dynasty outside its documented date range merely because it is the nearest snapshot; add milestone layers for reported years and use validity bounds to suppress anachronistic polity labels.
 - The selected timeline year is authoritative and must never snap to a nearby snapshot year. Resolve the applicable historical state by its effective boundary, keep the displayed year exact, and show only events whose recorded year matches it.
+- Human-authored historical events live in the Git-tracked `content/events.json` content pack. The `/studio` route is the visual authoring surface for map placement, validation, preview, import, and export; event annotations remain separate from territorial state changes.

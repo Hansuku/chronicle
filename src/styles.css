@@ -258,7 +258,8 @@ input:focus-visible,
   background: rgba(6, 14, 22, 0.72);
 }
 
-.mode-switch button {
+.mode-switch button,
+.mode-switch a {
   min-width: 108px;
   height: 32px;
   display: inline-flex;
@@ -271,6 +272,22 @@ input:focus-visible,
   color: #8f9188;
   font-size: 12px;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.mode-switch a.studio-entry {
+  min-width: 38px;
+  padding-inline: 9px;
+  color: #759d9d;
+}
+
+.mode-switch a.studio-entry span {
+  display: none;
+}
+
+.mode-switch a.studio-entry:hover {
+  border-color: rgba(122, 183, 188, 0.44);
+  color: #9ed0d1;
 }
 
 .mode-switch button.is-active {
@@ -1312,6 +1329,10 @@ input:focus-visible,
     min-width: 54px;
     padding-inline: 8px;
     font-size: 0;
+  }
+
+  .mode-switch a.studio-entry {
+    min-width: 40px;
   }
 
   .atlas-workspace {

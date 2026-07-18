@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import "../src/styles.css";
+import "../src/studio.css";
 
 const title = "地球编年史";
 const description =

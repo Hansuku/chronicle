@@ -19,6 +19,7 @@ import {
   GlobeHemisphereWest,
   MagnifyingGlass,
   MapTrifold,
+  NotePencil,
   Pause,
   Play,
   Sparkle,
@@ -330,6 +331,10 @@ export function App() {
             <ArrowsLeftRight size={17} aria-hidden="true" />
             文明对照
           </button>
+          <a className="studio-entry" href="/studio" aria-label="打开人工标注台">
+            <NotePencil size={17} aria-hidden="true" />
+            <span>数据标注</span>
+          </a>
         </div>
       </header>
 
